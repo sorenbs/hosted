@@ -11,7 +11,6 @@
 
 .codeContainer
 {
-	top: 150px;
 	width: 50%;
 	position: relative;
 }
@@ -22,7 +21,7 @@
 	background-color: red;
 	height: 500px;
 	position: fixed;
-	top: 246px;
+	top: 60px;
 	right: 0;
 }
 

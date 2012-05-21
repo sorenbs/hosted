@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script type="text/javascript" src="stacktrace-min-0.3.js"></script>
+<script type="text/javascript">
+try {
+	var a = 4;
+	var b = a + c;
+} catch (er) {
+		// @http://localhost:8080/static/gameEvaluator.html:8
+		// http://localhost:8080/static/gameEvaluator.html:8:14
+		var trace = printStackTrace({ e: er })[0];
+		var positionPart = trace.split(".html:")[1];
+		var line = col = -1;
+		if (positionPart.indexOf(":") != -1) {
+			line = positionPart.split(':')[0];
+			col = positionPart.split(':')[1];
+		} else {
+			line = positionPart;
+		}
+		console.log(positionPart, line, col);
+}
+</script>
+</head>
+</html>

@@ -19,17 +19,12 @@
 			<script type="text/javascript" src="static/app/js/namespace.js"></script>
 			<script type="text/javascript" src="static/app/js/viewmodels/crafter.model.component.js"></script>
 			<script type="text/javascript" src="static/app/js/viewmodels/crafter.model.component-list.js"></script>
-			<script type="text/javascript" src="static/app/js/viewmodels/crafter.model.crafter.js"></script>\
+			<script type="text/javascript" src="static/app/js/viewmodels/crafter.model.crafter.js"></script>
 			<script type="text/javascript" src="static/app/js/crafter.js"></script>
+			<script type="text/javascript" src="static/stacktrace-min-0.3.js"></script>
 		</head_merge>
-		<script id="ComponentEditor" type="text/html">
-			<textarea data-bind="{value: content, valueUpdate: 'afterkeydown'}" style="height: 100%"></textarea>
-		</script>
-		<button data-bind="click: playGame">
-			Play</button>
-		<div data-bind='template:{name: "ComponentEditor", foreach: componentListViewModel.components, afterRender: componentListViewModel.renderCodeMirrors}'
-			class="snapContainer">
-		</div>
+
+
 		<div class="codeContainer">
 			<textarea id="Code">
 				this
@@ -41,8 +36,44 @@
 			<div id="cr-stage">
 			</div>
 		</div>
+
+		<iframe src="static/gameEvaluator.html">
+			
+		</iframe>
 		<script type="text/javascript">
+
+			
+
 			ko.applyBindings(Crafter.viewModel);
+
+			var codeArea = document.getElementById('Code');
+			var cm = CodeMirror.fromTextArea(codeArea,
+			{
+				mode: 'javascript',
+				theme: 'ambiance',
+				lineNumbers: true,
+				indentUnit: 4,
+				indentWithTabs: true,
+				extraKeys: { "Ctrl-Space": "autocomplete" },
+				lineWrapping: true,
+				onChange: function () {
+					cm.save();
+
+					with ((window && window.console && window.console._commandLineAPI) || {}) {
+						eval(codeArea.value);
+					};
+
+					return;
+
+
+					try{
+						eval(codeArea.value)
+					} catch(er) {
+						console.log(er.stack)
+					}
+				}
+
+			});
 
 </script>
 		<p>
