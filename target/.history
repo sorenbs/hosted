@@ -1,0 +1,24 @@
+update
+jetty-run
+~jetty-runq
+~jetty-run
+reload
+eclipse
+eaxit
+q
+q
+exit
+reload
+eclipse
+~jetty-run
+run
+compile
+exit
+update
+compile
+build-dependencies
+build
+reload
+compile
+run
+~;container:start; container:reload /

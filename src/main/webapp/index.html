@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<body class="lift:content_id=main">
+	<div id="main" class="lift:surround?with=default;at=content">
+		<head_merge>
+			<script src="static/CodeMirror/lib/codemirror.js"></script>
+			<link rel="stylesheet" href="static/CodeMirror/lib/codemirror.css">
+			<link rel="stylesheet" href="static/CodeMirror/theme/ambiance.css">
+			<script src="static/CodeMirror/mode/javascript/javascript.js"></script>
+			<script src="static/CodeMirror/lib/util/simple-hint.js"></script>
+			<link rel="stylesheet" href="static/CodeMirror/lib/util/simple-hint.css">
+			<script src="static/CodeMirror/lib/util/javascript-hint.js"></script>
+			<script type="text/javascript" src="static/crafty.js"></script>
+			<script type="text/javascript" src="static/underscore-min.js"></script>
+			<script type='text/javascript' src='static/jquery-1.7.1.min.js'></script>
+			<script type='text/javascript' src='static/jquery.tmpl.js'></script>
+			<script type="text/javascript" src="static/knockout-2.1.0.js"></script>
+			<link rel="stylesheet" href="static/app/css/editor.css" />
+			<script type="text/javascript" src="static/app/js/namespace.js"></script>
+			<script type="text/javascript" src="static/app/js/viewmodels/crafter.model.component.js"></script>
+			<script type="text/javascript" src="static/app/js/viewmodels/crafter.model.component-list.js"></script>
+			<script type="text/javascript" src="static/app/js/viewmodels/crafter.model.crafter.js"></script>\
+			<script type="text/javascript" src="static/app/js/crafter.js"></script>
+		</head_merge>
+		<script id="ComponentEditor" type="text/html">
+			<textarea data-bind="{value: content, valueUpdate: 'afterkeydown'}" style="height: 100%"></textarea>
+		</script>
+		<button data-bind="click: playGame">
+			Play</button>
+		<div data-bind='template:{name: "ComponentEditor", foreach: componentListViewModel.components, afterRender: componentListViewModel.renderCodeMirrors}'
+			class="snapContainer">
+		</div>
+		<div class="codeContainer">
+			<textarea id="Code">
+				this
+				is
+				code
+			</textarea>
+		</div>
+		<div class="gameContainer">
+			<div id="cr-stage">
+			</div>
+		</div>
+		<script type="text/javascript">
+			ko.applyBindings(Crafter.viewModel);
+
+</script>
+		<p>
+			<span class="lift:helloWorld.howdy">Welcome to your Lift app at <span id="time">Time
+				goes here</span> </span>
+		</p>
+	</div>
+</body>
+</html>

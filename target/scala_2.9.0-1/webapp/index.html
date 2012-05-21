@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<body class="lift:content_id=main">
+	<div id="main" class="lift:surround?with=default;at=content">
+		<head_merge>
+			<script src="static/CodeMirror/lib/codemirror.js"></script>
+			<link rel="stylesheet" href="static/CodeMirror/lib/codemirror.css">
+			<link rel="stylesheet" href="static/CodeMirror/theme/ambiance.css">
+			<script src="static/CodeMirror/mode/javascript/javascript.js"></script>
+			<script src="static/CodeMirror/lib/util/simple-hint.js"></script>
+			<link rel="stylesheet" href="static/CodeMirror/lib/util/simple-hint.css">
+			<script src="static/CodeMirror/lib/util/javascript-hint.js"></script>
+			<style>
+				.CodeMirror-scroll
+				{
+					min-height: 500px;
+					height: 100%;
+				}
+			</style>
+		</head_merge>
+		<h2>
+			Bananabomber
+		</h2>
+		<div id="CodeMirror" style="height: 100%">
+		</div>
+		<script type="text/javascript">
+			CodeMirror.commands.autocomplete = function (cm) {
+				console.log("autocomplete");
+				CodeMirror.simpleHint(cm, CodeMirror.javascriptHint);
+			}
+			var myCodeMirror = CodeMirror(document.getElementById('CodeMirror'),
+			{
+				mode: 'javascript',
+				theme: 'ambiance',
+				lineNumbers: true,
+				indentUnit: 4,
+				indentWithTabs: true,
+				extraKeys: { "Ctrl-Space": "autocomplete" }
+			}
+			);
+</script>
+		<p>
+			<span class="lift:helloWorld.howdy">Welcome to your Lift app at <span id="time">Time
+				goes here</span> </span>
+		</p>
+	</div>
+</body>
+</html>
