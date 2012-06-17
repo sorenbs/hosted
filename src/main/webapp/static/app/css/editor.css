@@ -1,6 +1,6 @@
 ﻿.CodeMirror-scroll
 {
-	min-height: 500px;
+	min-height: 700px;
 	height: 100%;
 }
 
@@ -24,6 +24,21 @@
 	top: 60px;
 	right: 0;
 }
+
+.consoleContainer
+{
+	width: 50%;
+	background-color: red;
+	height: 200px;
+	position: fixed;
+	top: 560px;
+	right: 0;
+}
+
+	.consoleContainer .CodeMirror-scroll
+	{
+		min-height: 200px;
+	}
 
 .snapContainer
 {

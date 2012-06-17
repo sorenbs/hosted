@@ -1,13 +1,18 @@
 package bootstrap.liftweb
 
 import net.liftweb._
+import http.Req.NilPath
 import util._
 import Helpers._
-
 import common._
 import http._
 import sitemap._
 import Loc._
+import com.mongodb.ServerAddress
+import net.liftweb.mongodb.MongoDB
+import net.liftweb.mongodb.DefaultMongoIdentifier
+import com.mongodb.Mongo
+import com.foursquare.rogue.Rogue._
 
 
 /**
@@ -16,6 +21,22 @@ import Loc._
  */
 class Boot {
   def boot {
+    
+    
+    val srvr = new ServerAddress(
+	  Props.get("mongodb.url") openOr "craftybuilder.com",
+	  Props.getInt("mongodb.port") openOr 27017)
+	
+    MongoDB.defineDbAuth(
+        DefaultMongoIdentifier, 
+        new Mongo(srvr), 
+        Props.get("mongodb.db") openOr "craftybuilder",
+        Props.get("mongodb.user") openOr "CraftyBuilder",
+        Props.get("mongodb.pass") openOr System.getenv("builder.mongodb.pass")) 
+    
+    
+        var newCount = code.model.Counter where (_.name eqs "Craft") findAndModify (_.counter inc 1) updateOne(returnNew = true)
+        
     // where to search snippet
     LiftRules.addToPackages("code")
 
@@ -51,4 +72,24 @@ LiftRules.htmlProperties.default.set((r: Req) =>
   new Html5Properties(r.userAgent))  
 
   }
+  ///
+  // /api/*
+  ///
+  LiftRules.dispatch.append(code.lib.CraftRest)
+
+  ///
+  // /craft/x -> /craft/x/0
+  ///
+  LiftRules.dispatch.append {
+    case Req("craft" :: id :: Nil, _, _) =>
+      () => S.redirectTo("/craft/" + id + "/0")
+  }
+
+  ///
+  // /craft/x/y -> /index
+  ///
+  LiftRules.statelessRewrite.prepend(NamedPF("CraftRewrite") {
+    case RewriteRequest( ParsePath("craft" :: id :: version :: Nil, _, _, _), _, _ ) =>
+      RewriteResponse( "index" :: Nil, Map("simpleId" -> id, "version" -> version))
+  })
 }

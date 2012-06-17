@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<script type="text/javascript" src="stacktrace-min-0.3.js"></script>
-<script type="text/javascript">
+<script id="scriptEvaluator" type="text/javascript">
 try {
 	var a = 4;
 	var b = a + c;
@@ -18,8 +18,51 @@ try {
 		} else {
 			line = positionPart;
 		}
-		console.log(positionPart, line, col);
+		console.log(positionPart, line, col, er.message);
 }
 </script>
 </head>
+	<body>
+		<script>
+			///
+			var code =
+			"try { (function() {\n" +
+			"	var a = 4;\n" +
+			"\n" +
+			"	var b = a + d;\n" +
+			"})()} catch (er) {\n" +
+			"console.log(er.stack);}"
+			//"	// @http://localhost:8080/static/gameEvaluator.html:8\n" +
+			//"	// http://localhost:8080/static/gameEvaluator.html:8:14\n" +
+			//"	var trace = printStackTrace({ e: er })[0];\n" +
+			//"	var positionPart = trace.split('.html:')[1];\n" +
+			//"	var line = col = -1;\n" +
+			//"	if (positionPart.indexOf(':') != -1) {\n" +
+			//"		line = positionPart.split(':')[0];\n" +
+			//"		col = positionPart.split(':')[1];\n" +
+			//"	} else {\n" +
+			//"		line = positionPart;\n" +
+			//"	}\n" +
+			//"	console.log(positionPart, line, col, er.message);\n" +
+			//"}"
+			/////
+
+			
+			//document.head.removeChild(document.getElementById('scriptEvaluator'));
+			var scriptTag = document.createElement('script');
+			scriptTag.id = 'scriptEvaluator';
+			scriptTag.type = 'text/javascript';
+			scriptTag.appendChild(document.createTextNode(code));
+			document.head.replaceChild(scriptTag, document.getElementById('scriptEvaluator')) //  appendChild(scriptTag);
+			
+
+			//document.head.removeChild(document.getElementById('scriptEvaluator'));
+			scriptTag = document.createElement('script');
+			scriptTag.id = 'scriptEvaluator';
+			scriptTag.type = 'text/javascript';
+			scriptTag.appendChild(document.createTextNode(code));
+			document.head.replaceChild(scriptTag, document.getElementById('scriptEvaluator')) //  appendChild(scriptTag);
+
+		</script>
+	</body>
 </html>

@@ -1,6 +1,6 @@
 import com.typesafe.startscript.StartScriptPlugin
 
-name := "crafty-modules"
+name := "Crafty Builder"
  
 scalaVersion := "2.9.1"
 

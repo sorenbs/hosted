@@ -22,3 +22,7 @@ reload
 compile
 run
 ~;container:start; container:reload /
+eclipse
+~;container:start; container:reload /
+eclipse
+~;container:start; container:reload /

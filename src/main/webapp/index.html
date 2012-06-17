@@ -3,46 +3,67 @@
 <body class="lift:content_id=main">
 	<div id="main" class="lift:surround?with=default;at=content">
 		<head_merge>
-			<script src="static/CodeMirror/lib/codemirror.js"></script>
-			<link rel="stylesheet" href="static/CodeMirror/lib/codemirror.css">
-			<link rel="stylesheet" href="static/CodeMirror/theme/ambiance.css">
-			<script src="static/CodeMirror/mode/javascript/javascript.js"></script>
-			<script src="static/CodeMirror/lib/util/simple-hint.js"></script>
-			<link rel="stylesheet" href="static/CodeMirror/lib/util/simple-hint.css">
-			<script src="static/CodeMirror/lib/util/javascript-hint.js"></script>
-			<script type="text/javascript" src="static/crafty.js"></script>
-			<script type="text/javascript" src="static/underscore-min.js"></script>
-			<script type='text/javascript' src='static/jquery-1.7.1.min.js'></script>
-			<script type='text/javascript' src='static/jquery.tmpl.js'></script>
-			<script type="text/javascript" src="static/knockout-2.1.0.js"></script>
-			<link rel="stylesheet" href="static/app/css/editor.css" />
-			<script type="text/javascript" src="static/app/js/namespace.js"></script>
-			<script type="text/javascript" src="static/app/js/viewmodels/crafter.model.component.js"></script>
-			<script type="text/javascript" src="static/app/js/viewmodels/crafter.model.component-list.js"></script>
-			<script type="text/javascript" src="static/app/js/viewmodels/crafter.model.crafter.js"></script>
-			<script type="text/javascript" src="static/app/js/crafter.js"></script>
-			<script type="text/javascript" src="static/stacktrace-min-0.3.js"></script>
+			<script id="scriptEvaluator" type="text/javascript"></script>
+			<script src="/static/CodeMirror/lib/codemirror.js"></script>
+			<link rel="stylesheet" href="/static/CodeMirror/lib/codemirror.css">
+			<link rel="stylesheet" href="/static/CodeMirror/theme/ambiance.css">
+			<script src="/static/CodeMirror/mode/javascript/javascript.js"></script>
+			<script src="/static/CodeMirror/lib/util/simple-hint.js"></script>
+			<link rel="stylesheet" href="/static/CodeMirror/lib/util/simple-hint.css">
+			<script src="/static/CodeMirror/lib/util/javascript-hint.js"></script>
+			<script type="text/javascript" src="/static/crafty.js"></script>
+			<script type="text/javascript" src="/static/underscore-min.js"></script>
+			<script type='text/javascript' src='/static/jquery-1.7.1.min.js'></script>
+			<script type='text/javascript' src='/static/jquery.tmpl.js'></script>
+			<script type="text/javascript" src="/static/knockout-2.1.0.js"></script>
+			<link rel="stylesheet" href="/static/app/css/editor.css" />
+			<script type="text/javascript" src="/static/app/js/namespace.js"></script>
+			<script type="text/javascript" src="/static/app/js/viewmodels/crafter.model.component.js"></script>
+			<script type="text/javascript" src="/static/app/js/viewmodels/crafter.model.component-list.js"></script>
+			<script type="text/javascript" src="/static/app/js/viewmodels/crafter.model.crafter.js"></script>
+			<script type="text/javascript" src="/static/app/js/crafter.js"></script>
+			<script type="text/javascript" src="/static/stacktrace-min-0.3.js"></script>
+			<script type="text/javascript" src="/static/app/js/initCrafty.js"></script>
 		</head_merge>
-
-
 		<div class="codeContainer">
 			<textarea id="Code">
-				this
-				is
-				code
 			</textarea>
 		</div>
-		<div class="gameContainer">
+		<div id="gameContainer" class="gameContainer">
 			<div id="cr-stage">
 			</div>
 		</div>
-
-		<iframe src="static/gameEvaluator.html">
-			
-		</iframe>
+		<div class="consoleContainer">
+			<textarea id="Console">
+			</textarea>
+		</div>
 		<script type="text/javascript">
 
-			
+			var firstLogInSession = true;
+			var log = function (msg) {
+				if (firstLogInSession) {
+					consoleMirror.setValue("");
+				}
+				firstLogInSession = false;
+				consoleMirror.setValue(consoleMirror.getValue() + "\n" + msg);
+			}
+			Crafty.log = log;
+
+			var logError = function (ex) {
+				try{
+					var position = ex.stack.split('\n')[1].split('/:')[1];
+					var line = position.split(':')[0] - 1;
+					var col = position.split(':')[1];
+					log(ex.message + " " + line + ":" + col);
+				} catch (ex2) {
+					log(ex);
+				}
+			}
+
+			window.onerror = function (e) {
+			//	log(e);
+			}
+
 
 			ko.applyBindings(Crafter.viewModel);
 
@@ -59,27 +80,55 @@
 				onChange: function () {
 					cm.save();
 
-					with ((window && window.console && window.console._commandLineAPI) || {}) {
-						eval(codeArea.value);
-					};
+					firstLogInSession = true;
+
+					Crafty.stop(true);
+
+
+					try {
+						var scriptTag = document.createElement('script');
+						scriptTag.id = 'scriptEvaluator';
+						scriptTag.type = 'text/javascript';
+						scriptTag.appendChild(document.createTextNode("try { (function() {\n" + codeArea.value + "})()} catch (er) {\n logError(er);}"));
+
+						document.head.replaceChild(scriptTag, document.getElementById('scriptEvaluator'));
+					} catch (ex) {
+						logError(ex);
+					}
+					//Clear the log if no errors
+					if (firstLogInSession) {
+						log("");
+					}
+					
+
 
 					return;
-
-
-					try{
-						eval(codeArea.value)
-					} catch(er) {
-						console.log(er.stack)
-					}
 				}
+			});
+
+
+			var consoleArea = document.getElementById('Console');
+			var consoleMirror = CodeMirror.fromTextArea(consoleArea,
+			{
+				mode: 'javascript',
+				theme: 'ambiance',
+				lineNumbers: true,
+				indentUnit: 4,
+				indentWithTabs: true,
+				extraKeys: { "Ctrl-Space": "autocomplete" },
+				lineWrapping: true
+
 
 			});
 
+            var idVersion = window.location.pathname.split('craft/')[1].split('/');
+            var id = idVersion[0];
+            var version = idVersion[1];
+            console.log(id + " " + version);
+
+
 </script>
-		<p>
-			<span class="lift:helloWorld.howdy">Welcome to your Lift app at <span id="time">Time
-				goes here</span> </span>
-		</p>
+
 	</div>
 </body>
 </html>
