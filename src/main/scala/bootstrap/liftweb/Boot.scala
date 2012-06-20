@@ -14,7 +14,6 @@ import net.liftweb.mongodb.DefaultMongoIdentifier
 import com.mongodb.Mongo
 import com.foursquare.rogue.Rogue._
 
-
 /**
  * A class that's instantiated early and run.  It allows the application
  * to modify lift's environment
@@ -35,14 +34,14 @@ class Boot {
         Props.get("mongodb.pass") openOr System.getenv("builder.mongodb.pass")) 
     
     
-        var newCount = code.model.Counter where (_.name eqs "Craft") findAndModify (_.counter inc 1) updateOne(returnNew = true)
-        
+
     // where to search snippet
     LiftRules.addToPackages("code")
 
     // Build SiteMap
     val entries = List(
       Menu.i("Home") / "index", // the simple way to declare a menu
+      Menu.i("Editor") / "editor",
 
       // more complex because this menu allows anything in the
       // /static path to be visible
@@ -86,10 +85,32 @@ LiftRules.htmlProperties.default.set((r: Req) =>
   }
 
   ///
+  // / -> /craft/x/0
+  ///
+  LiftRules.dispatch.append {
+
+    case Req("index" :: Nil, _, _) =>
+      () =>
+        {
+          val nextId = code.model.Counter
+            .where(_.name eqs "Craft")
+            .findAndModify(_.counter inc 1)
+            .updateOne(returnNew = true)
+            .asInstanceOf[scala.Some[code.model.Counter]].get.counter
+
+          println("")
+          println(nextId)
+
+          //code.model.Craft.createRecord.version(0).shortId(nextId).save
+          S.redirectTo("/craft/" + nextId + "/0")
+        }
+  }
+
+  ///
   // /craft/x/y -> /index
   ///
   LiftRules.statelessRewrite.prepend(NamedPF("CraftRewrite") {
     case RewriteRequest( ParsePath("craft" :: id :: version :: Nil, _, _, _), _, _ ) =>
-      RewriteResponse( "index" :: Nil, Map("simpleId" -> id, "version" -> version))
+      RewriteResponse( "editor" :: Nil, Map("simpleId" -> id, "version" -> version))
   })
 }
