@@ -7,26 +7,40 @@
       <change type="DELETED" beforePath="C:\cc\hosted\src\test\scala\RunWebApp.scala" afterPath="" />
       <change type="DELETED" beforePath="C:\cc\hosted\src\test\scala\code\AppTest.scala" afterPath="" />
       <change type="DELETED" beforePath="C:\cc\hosted\src\test\scala\code\snippet\HelloWorldTest.scala" afterPath="" />
-      <change type="DELETED" beforePath="C:\cc\hosted\target\scala-2.9.1\classes\bootstrap\liftweb\Boot$$anonfun$4.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\cc\hosted\target\scala-2.9.1\classes\bootstrap\liftweb\Boot$$anonfun$5.class" afterPath="" />
       <change type="DELETED" beforePath="C:\cc\hosted\target\scala-2.9.1\classes\bootstrap\liftweb\Boot$$anonfun$6$$anonfun$apply$1.class" afterPath="" />
       <change type="DELETED" beforePath="C:\cc\hosted\target\scala-2.9.1\classes\bootstrap\liftweb\Boot$$anonfun$6.class" afterPath="" />
       <change type="DELETED" beforePath="C:\cc\hosted\target\scala-2.9.1\classes\bootstrap\liftweb\Boot$$anonfun$7.class" afterPath="" />
-      <change type="MOVED" beforePath="C:\cc\hosted\src\main\webapp\index.html" afterPath="$PROJECT_DIR$/src/main/webapp/editor.html" />
+      <change type="DELETED" beforePath="C:\cc\hosted\target\scala-2.9.1\classes\code\lib\CraftRest$$anonfun$1$$anonfun$apply$1.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\cc\hosted\target\scala-2.9.1\classes\code\lib\CraftRest$$anonfun$1$$anonfun$apply$2.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\cc\hosted\target\scala-2.9.1\classes\code\lib\CraftRest$$anonfun$1$$anonfun$apply$3.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\cc\hosted\target\scala-2.9.1\classes\code\lib\CraftRest$$anonfun$1.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\cc\hosted\target\scala-2.9.1\classes\code\lib\CraftRest$.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\cc\hosted\target\scala-2.9.1\classes\code\lib\CraftRest$CraftParams$.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\cc\hosted\target\scala-2.9.1\classes\code\lib\CraftRest$CraftParams.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\cc\hosted\target\scala-2.9.1\classes\code\lib\CraftRest.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\cc\hosted\target\scala-2.9.1\classes\code\model\Craft$PublicCraft$.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\cc\hosted\target\scala-2.9.1\classes\code\model\Craft$PublicCraft.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\cc\hosted\target\scala-2.9.1\classes\code\model\Craft$version$.class" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.cache" afterPath="$PROJECT_DIR$/.cache" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/cache/compile/compile" afterPath="$PROJECT_DIR$/target/scala-2.9.1/cache/compile/compile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$1.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$2.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$3.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$boot$1.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$boot$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$boot$2.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$boot$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$boot$3.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$boot$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$boot$4.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$boot$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$boot$5.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$boot$5.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$boot$6.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$boot$6.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$boot$7.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$boot$7.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$5$$anonfun$apply$2.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$5$$anonfun$apply$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$8.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot$$anonfun$8.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/bootstrap/liftweb/Boot.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/model/Counter$.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/model/Counter$.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/model/Counter$counter$.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/model/Counter$counter$.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/model/Counter$name$.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/model/Counter$name$.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/model/Counter.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/model/Counter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/model/Craft$.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/model/Craft$.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/model/Craft$code$.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/model/Craft$code$.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/model/Craft.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/model/Craft.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/snippet/HelloWorld$$anonfun$howdy$1.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/snippet/HelloWorld$$anonfun$howdy$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/snippet/HelloWorld.class" afterPath="$PROJECT_DIR$/target/scala-2.9.1/classes/code/snippet/HelloWorld.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/streams/compile/compile/$global/out" afterPath="$PROJECT_DIR$/target/streams/compile/compile/$global/out" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/bootstrap/liftweb/Boot.scala" afterPath="$PROJECT_DIR$/src/main/scala/bootstrap/liftweb/Boot.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/code/lib/CraftRest.scala" afterPath="$PROJECT_DIR$/src/main/scala/code/lib/CraftRest.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/code/model/Craft.scala" afterPath="$PROJECT_DIR$/src/main/scala/code/model/Craft.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/editor.html" afterPath="$PROJECT_DIR$/src/main/webapp/editor.html" />
     </list>
     <ignored path="Crafty Builder.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -84,22 +98,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="CraftRest.scala" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="CraftRest.scala" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/code/lib/CraftRest.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="5" selection-start="521" selection-end="521" vertical-scroll-proportion="0.0">
+            <state line="31" column="102" selection-start="1086" selection-end="1086" vertical-scroll-proportion="0.2253012">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Boot.scala" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Boot.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/bootstrap/liftweb/Boot.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="20" selection-start="1122" selection-end="1122" vertical-scroll-proportion="0.06268882">
-              <folding>
-                <element signature="e#27#47#0" expanded="true" />
-              </folding>
+            <state line="97" column="75" selection-start="2626" selection-end="2626" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -116,7 +128,16 @@
       <file leaf-file-name="Craft.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/code/model/Craft.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="11" selection-start="794" selection-end="794" vertical-scroll-proportion="0.0">
+            <state line="9" column="32" selection-start="370" selection-end="370" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MongoListField.class" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$USER_HOME$/.ivy2/cache/net.liftweb/lift-mongodb-record_2.9.1/jars/lift-mongodb-record_2.9.1-2.4.jar!/net/liftweb/mongodb/record/field/MongoListField.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="93" selection-start="134" selection-end="134" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -125,7 +146,7 @@
       <file leaf-file-name="editor.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/editor.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="129" column="0" selection-start="4170" selection-end="4170" vertical-scroll-proportion="-47.96154">
+            <state line="127" column="0" selection-start="4110" selection-end="4110" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -147,6 +168,8 @@
         <option value="$PROJECT_DIR$/src/main/webapp/index.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/editor.html" />
         <option value="$PROJECT_DIR$/src/main/scala/bootstrap/liftweb/Boot.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/code/model/Craft.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/code/lib/CraftRest.scala" />
       </list>
     </option>
   </component>
@@ -154,9 +177,10 @@
     <option name="jreName" value="#JAVA_INTERNAL" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1280" />
-    <option name="width" value="1280" />
-    <option name="height" value="1560" />
+    <option name="x" value="1192" />
+    <option name="y" value="-8" />
+    <option name="width" value="1216" />
+    <option name="height" value="1896" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -184,30 +208,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Crafty Builder" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Crafty Builder" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -278,6 +278,108 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Crafty Builder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hosted" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Crafty Builder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hosted" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Crafty Builder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hosted" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Crafty Builder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Crafty Builder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -415,23 +517,23 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1280" y="0" width="1280" height="1560" extended-state="0" />
+    <frame x="1192" y="-8" width="1216" height="1896" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.03431022" sideWeight="0.48065844" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.027665706" sideWeight="0.4735013" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.03431022" sideWeight="0.51358026" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.027665706" sideWeight="0.52041703" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21728395" sideWeight="0.9656898" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22936577" sideWeight="0.97233427" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -500,43 +602,46 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/scala/code/lib/CraftRest.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="5" selection-start="521" selection-end="521" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/code/model/Counter.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="7" selection-start="574" selection-end="574" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/code/model/Craft.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/bootstrap/liftweb/Boot.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="11" selection-start="794" selection-end="794" vertical-scroll-proportion="0.0">
+        <state line="97" column="75" selection-start="2626" selection-end="2626" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/code/model/Counter.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="7" selection-start="574" selection-end="574" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/net.liftweb/lift-mongodb-record_2.9.1/jars/lift-mongodb-record_2.9.1-2.4.jar!/net/liftweb/mongodb/record/field/MongoListField.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="93" selection-start="134" selection-end="134" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/editor.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="129" column="0" selection-start="4170" selection-end="4170" vertical-scroll-proportion="-47.96154">
+        <state line="127" column="0" selection-start="4110" selection-end="4110" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/bootstrap/liftweb/Boot.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/code/model/Craft.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="20" selection-start="1122" selection-end="1122" vertical-scroll-proportion="0.06268882">
-          <folding>
-            <element signature="e#27#47#0" expanded="true" />
-          </folding>
+        <state line="9" column="32" selection-start="370" selection-end="370" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/code/lib/CraftRest.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="102" selection-start="1086" selection-end="1086" vertical-scroll-proportion="0.2253012">
+          <folding />
         </state>
       </provider>
     </entry>

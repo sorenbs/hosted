@@ -1,30 +1,75 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<body class="lift:content_id=main">
-	<div id="main" class="lift:surround?with=default;at=content">
-		<head_merge>
-			<script id="scriptEvaluator" type="text/javascript"></script>
-			<script src="/static/CodeMirror/lib/codemirror.js"></script>
-			<link rel="stylesheet" href="/static/CodeMirror/lib/codemirror.css">
-			<link rel="stylesheet" href="/static/CodeMirror/theme/ambiance.css">
-			<script src="/static/CodeMirror/mode/javascript/javascript.js"></script>
-			<script src="/static/CodeMirror/lib/util/simple-hint.js"></script>
-			<link rel="stylesheet" href="/static/CodeMirror/lib/util/simple-hint.css">
-			<script src="/static/CodeMirror/lib/util/javascript-hint.js"></script>
-			<script type="text/javascript" src="/static/crafty.js"></script>
-			<script type="text/javascript" src="/static/underscore-min.js"></script>
-			<script type='text/javascript' src='/static/jquery-1.7.1.min.js'></script>
-			<script type='text/javascript' src='/static/jquery.tmpl.js'></script>
-			<script type="text/javascript" src="/static/knockout-2.1.0.js"></script>
-			<link rel="stylesheet" href="/static/app/css/editor.css" />
-			<script type="text/javascript" src="/static/app/js/namespace.js"></script>
-			<script type="text/javascript" src="/static/app/js/viewmodels/crafter.model.component.js"></script>
-			<script type="text/javascript" src="/static/app/js/viewmodels/crafter.model.component-list.js"></script>
-			<script type="text/javascript" src="/static/app/js/viewmodels/crafter.model.crafter.js"></script>
-			<script type="text/javascript" src="/static/app/js/crafter.js"></script>
-			<script type="text/javascript" src="/static/stacktrace-min-0.3.js"></script>
-			<script type="text/javascript" src="/static/app/js/initCrafty.js"></script>
-		</head_merge>
+	<head>
+		<title>CraftyBuilder</title>
+		<script id="Script2" src="/classpath/jquery.js" type="text/javascript"></script>
+		<script id="Script3" src="/classpath/json.js" type="text/javascript"></script>
+		<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+		<!--[if lt IE 9]>			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>		<![endif]-->
+		<!-- Le styles -->
+		<link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+		<style type="text/css">
+			/* <![CDATA[ */
+			body
+			{
+				padding-top: 60px;
+			}
+			/* ]]> */
+		</style>
+		<!-- Le fav and touch icons -->
+		<link rel="shortcut icon" href="images/favicon.ico">
+		<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+		
+
+		<script type="text/javascript" src="/static/jslint.js"></script>
+		<script id="scriptEvaluator" type="text/javascript"></script>
+		<script src="/static/CodeMirror/lib/codemirror.js"></script>
+		<link rel="stylesheet" href="/static/CodeMirror/lib/codemirror.css">
+		<link rel="stylesheet" href="/static/CodeMirror/theme/ambiance.css">
+		<script src="/static/CodeMirror/mode/javascript/javascript.js"></script>
+		<script src="/static/CodeMirror/lib/util/simple-hint.js"></script>
+		<link rel="stylesheet" href="/static/CodeMirror/lib/util/simple-hint.css">
+		<script src="/static/CodeMirror/lib/util/javascript-hint.js"></script>
+		<script type="text/javascript" src="/static/crafty.js"></script>
+		<script type="text/javascript" src="/static/underscore-min.js"></script>
+		<script type='text/javascript' src='/static/jquery-1.7.1.min.js'></script>
+		<script type='text/javascript' src='/static/jquery.tmpl.js'></script>
+		<script type="text/javascript" src="/static/knockout-2.1.0.js"></script>
+		<link rel="stylesheet" href="/static/app/css/editor.css" />
+		<script type="text/javascript" src="/static/app/js/namespace.js"></script>
+		<script type="text/javascript" src="/static/app/js/viewmodels/crafter.model.component.js"></script>
+		<script type="text/javascript" src="/static/app/js/viewmodels/crafter.model.component-list.js"></script>
+		<script type="text/javascript" src="/static/app/js/viewmodels/crafter.model.crafter.js"></script>
+		<script type="text/javascript" src="/static/app/js/crafter.js"></script>
+		<script type="text/javascript" src="/static/stacktrace-min-0.3.js"></script>
+
+	</head>
+<body>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" href="/">CraftyBuilder</a>
+				<ul class="nav">
+					<li class="menu_item">
+						<a onclick="postToServer();" href="#">Save</a>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" href="#" data-toggle="dropdown">Templates <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+						  <li><a style="cursor:pointer" onclick="loadTemplate('pong');">Pong</a></li>
+						  <li><a href="#">Another action</a></li>
+						  <li><a href="#">Something else here</a></li>
+						  <li class="divider"></li>
+						  <li><a href="#">Separated link</a></li>
+						</ul>
+					  </li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="main" >
 		<div class="codeContainer">
 			<textarea id="Code">
 			</textarea>
@@ -39,6 +84,7 @@
 		</div>
 		<script type="text/javascript">
 
+			var evaluateEditorCode = true;
 			var firstLogInSession = true;
 			var log = function (msg) {
 				if (firstLogInSession) {
@@ -50,10 +96,19 @@
 			Crafty.log = log;
 
 			var logError = function (ex) {
-				try{
-					var position = ex.stack.split('\n')[1].split('/:')[1];
-					var line = position.split(':')[0] - 1;
-					var col = position.split(':')[1];
+				try {
+					// get line and column from chrome stack trace. Syntax: 
+					//ReferenceError: b is not defined
+					//	at http://localhost:8080/craft/115/1:2:9
+					//	at http://localhost:8080/craft/115/1:48:3
+					//	at Object.onChange (http://localhost:8080/craft/115/1:137:21)
+					//	at endOperation (http://localhost:8080/static/CodeMirror/lib/codemirror.js:1862:17)
+					//	at p (http://localhost:8080/static/CodeMirror/lib/codemirror.js:833:9) 
+
+					var interestingLine = ex.stack.split('\n')[1];
+					var parts = interestingLine.split(':').length;
+					var line = interestingLine.split(':')[parts-2] - 1;
+					var col = interestingLine.split(':')[parts-1];
 					log(ex.message + " " + line + ":" + col);
 				} catch (ex2) {
 					log(ex);
@@ -61,7 +116,7 @@
 			}
 
 			window.onerror = function (e) {
-			//	log(e);
+				log(e);
 			}
 
 
@@ -79,33 +134,33 @@
 				lineWrapping: true,
 				onChange: function () {
 					cm.save();
-
 					firstLogInSession = true;
-
 					Crafty.stop(true);
 
+					if (!JSLINT(codeArea.value, {
+browser: true, devel: true, passfail: true, bitwise: true, continue: true, debug: true, eqeq: true, es5: true, evil: true, forin: true, newcap: true, nomen: true, plusplus: true, regexp: true, undef: true, unparam: true, sloppy: true, stupid: true, sub: true, vars: true, white: true, css: true, cap: true, on: true, fragment: true, predef: {Crafty: true}
+					})) {
+						log(JSLINT.errors[0].reason + " " + JSLINT.errors[0].line + ":" + JSLINT.errors[0].character);
+					}// else {
+						try {
+							var scriptTag = document.createElement('script');
+							scriptTag.id = 'scriptEvaluator';
+							scriptTag.type = 'text/javascript';
+							scriptTag.appendChild(document.createTextNode("try { (function() {\n" + codeArea.value + "})()} catch (er) {\n logError(er);}"));
 
-					try {
-						var scriptTag = document.createElement('script');
-						scriptTag.id = 'scriptEvaluator';
-						scriptTag.type = 'text/javascript';
-						scriptTag.appendChild(document.createTextNode("try { (function() {\n" + codeArea.value + "})()} catch (er) {\n logError(er);}"));
-
-						document.head.replaceChild(scriptTag, document.getElementById('scriptEvaluator'));
-					} catch (ex) {
-						logError(ex);
-					}
+							document.head.replaceChild(scriptTag, document.getElementById('scriptEvaluator'));
+						} catch (ex) {
+							logError(ex);
+						}
+					//}
 					//Clear the log if no errors
 					if (firstLogInSession) {
 						log("");
 					}
 
-
-
 					return;
 				}
 			});
-
 
 			var consoleArea = document.getElementById('Console');
 			var consoleMirror = CodeMirror.fromTextArea(consoleArea,
@@ -117,8 +172,6 @@
 				indentWithTabs: true,
 				extraKeys: { "Ctrl-Space": "autocomplete" },
 				lineWrapping: true
-
-
 			});
 
             var idVersion = window.location.pathname.split('craft/')[1].split('/');
@@ -126,9 +179,86 @@
             var version = idVersion[1];
             console.log(id + " " + version);
 
+            $.ajax({
+            	url: "/api/craft/" + id + "/" + version,
+            	success: function (data) {
+            		if (data.error) {
+            			console.log("AWK!, " + data.error)
+            		} else {
+            			cm.setValue(data.code);
+            		}
+            	},
+            	dataType: 'json'
+            });
+
+            function postToServer() {
+            	log("Saving");
+				$.ajax({
+            		type: 'POST',
+            		url: "/api/craft/save/" + id,
+            		data: { code: codeArea.value },
+            		success: function (data) {
+						log("Saved version " + data.version)
+            		}
+            	});
+			}
+
+            function loadTemplate() {
+            	evaluateEditorCode = false;
+            	console.log('!!!!!!!!!!!!!!!');
+            	cm.setValue(document.getElementById('pongCode').textContent);
+            	evaluateEditorCode = true;
+            }
 
 </script>
+<script type="text" id="pongCode">Crafty.init(600, 400);
+Crafty.background('rgb(127,127,127)');
+
+//Paddles 
+Crafty.e("Paddle, 2D, DOM, Color, Multiway")
+	.color('rgb(255,0,0)')
+	.attr({ x: 20, y: 200, w: 10, h: 150 })
+	.multiway(4, { W: -90, S: 90 });
+Crafty.e("Paddle, 2D, DOM, Color, Multiway")
+	.color('rgb(0,255,0)')
+	.attr({ x: 580, y: 200, w: 10, h: 150 })
+	.multiway(4, { UP_ARROW: -90, DOWN_ARROW: 90 });
+
+//Ball
+Crafty.e("2D, DOM, Color, Collision")
+	.color('rgb(0,0,255)')
+	.attr({ x: 300, y: 200, w: 10, h: 10, dX: Crafty.math.randomInt(1, 5), dY: Crafty.math.randomInt(1, 5) })
+	.bind('EnterFrame', function () {
+		//hit floor or roof
+		if (this.y <= 0 || this.y >= 390) {
+			this.dY *= -1;
+}
+
+		if (this.x > 600) {
+			this.x = 300;
+			Crafty("LeftPaddle").each(function () { this.text(++this.points + " Points"); });
+		}
+		if (this.x < 10) {
+			this.x = 300;
+			Crafty("RightPaddle").each(function () { this.text(++this.points + " Points"); });
+		}
+
+		this.x += this.dX;
+		this.y += this.dY;
+	})
+	.onHit('Paddle', function () {
+		this.dX *= -1;
+	});
+
+//Score boards
+Crafty.e("LeftPaddle, DOM, 2D, Text")
+	.attr({ x: 20, y: 20, w: 100, h: 20, points: 0 })
+	.text("0 Points");
+		Crafty.e("RightPaddle, DOM, 2D, Text")
+	.attr({ x: 480, y: 20, w: 100, h: 20, points: 0 })
+	.text("0 Points");</script>
 
 	</div>
+	<script type="text/javascript" src="/static/bootstrap/js/bootstrap.js"></script>
 </body>
 </html>

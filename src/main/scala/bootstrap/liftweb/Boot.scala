@@ -96,12 +96,10 @@ LiftRules.htmlProperties.default.set((r: Req) =>
             .where(_.name eqs "Craft")
             .findAndModify(_.counter inc 1)
             .updateOne(returnNew = true)
-            .asInstanceOf[scala.Some[code.model.Counter]].get.counter
+            .asInstanceOf[scala.Some[code.model.Counter]].get.counter.value
 
-          println("")
-          println(nextId)
 
-          //code.model.Craft.createRecord.version(0).shortId(nextId).save
+          code.model.Craft.createRecord.shortId(nextId).save
           S.redirectTo("/craft/" + nextId + "/0")
         }
   }

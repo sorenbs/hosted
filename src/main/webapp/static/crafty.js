@@ -6,7 +6,6 @@
 * Dual licensed under the MIT or GPL licenses.
 */
 
-
 (function (window, initComponents, undefined) {
 	/**@
     * #Crafty
@@ -752,11 +751,11 @@
         *
         * @example
         * ~~~
-        * Crafty.getVersion(); //'0.4.8'
+        * Crafty.getVersion(); //'0.4.9'
         * ~~~
         */
 		getVersion: function () {
-			return '0.4.8';
+			return '0.4.9';
 		},
 
 		/**@
@@ -1232,10 +1231,10 @@
 
 	//make Crafty global
 	window.Crafty = Crafty;
-})(window, 
-//wrap around components
-function (Crafty, window, document) {
+})(window,
 
+	//wrap around components
+function (Crafty, window, document) {
 
 	/**
 * Spatial HashMap for broad phase collision
@@ -1530,7 +1529,6 @@ function (Crafty, window, document) {
 
 		parent.HashMap = HashMap;
 	})(Crafty);
-
 
 	/**@
 * #Crafty.map
@@ -2636,7 +2634,6 @@ function (Crafty, window, document) {
 		}
 	}
 
-
 	/**@
 * #Collision
 * @category 2D
@@ -2935,7 +2932,6 @@ function (Crafty, window, document) {
 	});
 
 
-
 	/**@
 * #.WiredHitBox
 * @comp Collision
@@ -3033,7 +3029,6 @@ function (Crafty, window, document) {
 			return this;
 		}
 	});
-
 	/**@
 * #DOM
 * @category Graphics
@@ -3046,8 +3041,11 @@ function (Crafty, window, document) {
 	* The DOM element used to represent the entity.
 	*/
 		_element: null,
+		//holds current styles, so we can check if there are changes to be written to the DOM
+		_cssStyles: null,
 
 		init: function () {
+			this._cssStyles = { visibility: '', left: '', top: '', width: '', height: '', zIndex: '', opacity: '', transformOrigin: '', transform: '' };
 			this._element = document.createElement("div");
 			Crafty.stage.inner.appendChild(this._element);
 			this._element.style.position = "absolute";
@@ -3136,23 +3134,47 @@ function (Crafty, window, document) {
 			prefix = Crafty.support.prefix,
 			trans = [];
 
-			if (!this._visible) style.visibility = "hidden";
-			else style.visibility = "visible";
+			if (this._cssStyles.visibility != this._visible) {
+				this._cssStyles.visibility = this._visible;
+				if (!this._visible) {
+					style.visibility = "hidden";
+				} else {
+					style.visibility = "visible";
+				}
+			}
 
 			//utilize CSS3 if supported
 			if (Crafty.support.css3dtransform) {
 				trans.push("translate3d(" + (~~this._x) + "px," + (~~this._y) + "px,0)");
 			} else {
-				style.left = ~~(this._x) + "px";
-				style.top = ~~(this._y) + "px";
+				if (this._cssStyles.left != this._x) {
+					this._cssStyles.left = this._x;
+					style.left = ~~(this._x) + "px";
+				}
+				if (this._cssStyles.top != this._y) {
+					this._cssStyles.top = this._y;
+					style.top = ~~(this._y) + "px";
+				}
 			}
 
-			style.width = ~~(this._w) + "px";
-			style.height = ~~(this._h) + "px";
-			style.zIndex = this._z;
+			if (this._cssStyles.width != this._w) {
+				this._cssStyles.width = this._w;
+				style.width = ~~(this._w) + "px";
+			}
+			if (this._cssStyles.height != this._h) {
+				this._cssStyles.height = this._h;
+				style.height = ~~(this._h) + "px";
+			}
+			if (this._cssStyles.zIndex != this._z) {
+				this._cssStyles.zIndex = this._z;
+				style.zIndex = this._z;
+			}
 
-			style.opacity = this._alpha;
-			style[prefix + "Opacity"] = this._alpha;
+			if (this._cssStyles.opacity != this._alpha) {
+				this._cssStyles.opacity = this._alpha;
+				style.opacity = this._alpha;
+				style[prefix + "Opacity"] = this._alpha;
+			}
 
 			//if not version 9 of IE
 			if (prefix === "ms" && Crafty.support.version < 9) {
@@ -3192,8 +3214,11 @@ function (Crafty, window, document) {
 				this.applyFilters();
 			}
 
-			style.transform = trans.join(" ");
-			style[prefix + "Transform"] = trans.join(" ");
+			if (this._cssStyles.transform != trans.join(" ")) {
+				this._cssStyles.transform = trans.join(" ");
+				style.transform = this._cssStyles.transform;
+				style[prefix + "Transform"] = this._cssStyles.transform;
+			}
 
 			this.trigger("Draw", { style: style, type: "DOM", co: co });
 
@@ -3395,7 +3420,6 @@ function (Crafty, window, document) {
 		}
 	});
 
-
 	/**@
 * #HTML
 * @category Graphics
@@ -3474,7 +3498,6 @@ function (Crafty, window, document) {
 			return this;
 		}
 	});
-
 	/**@
  * #Storage
  * @category Utilities
@@ -4066,7 +4089,6 @@ function (Crafty, window, document) {
 		},
 	}*/
 	})();
-
 	/**@
 * #Crafty.support
 * @category Misc, Core
@@ -4484,12 +4506,14 @@ function (Crafty, window, document) {
 
 				//update viewport and DOM scroll
 				this[axis] = v;
-				if (axis == '_x') {
-					if (context) context.translate(change, 0);
-				} else {
-					if (context) context.translate(0, change);
+				if (context) {
+					if (axis == '_x') {
+						context.translate(change, 0);
+					} else {
+						context.translate(0, change);
+					}
+					Crafty.DrawManager.drawAll();
 				}
-				if (context) Crafty.DrawManager.drawAll();
 				style[axis == '_x' ? "left" : "top"] = v + "px";
 			},
 
@@ -4651,12 +4675,13 @@ function (Crafty, window, document) {
 
 				function enterFrame() {
 					if (dur > 0) {
+						if (isFinite(Crafty.viewport._zoom)) zoom = Crafty.viewport._zoom;
 						var old = {
 							width: act.width * zoom,
 							height: act.height * zoom
 						};
 						zoom += zoom_tick;
-						this._zoom = zoom;
+						Crafty.viewport._zoom = zoom;
 						var new_s = {
 							width: act.width * zoom,
 							height: act.height * zoom
@@ -4667,7 +4692,8 @@ function (Crafty, window, document) {
 						};
 						Crafty.stage.inner.style[prop] = 'scale(' + zoom + ',' + zoom + ')';
 						if (Crafty.canvas._canvas) {
-							Crafty.canvas.context.scale(zoom, zoom);
+							var czoom = zoom / (zoom - zoom_tick);
+							Crafty.canvas.context.scale(czoom, czoom);
 							Crafty.DrawManager.drawAll();
 						}
 						Crafty.viewport.x -= diff.width * prct.width;
@@ -4679,6 +4705,10 @@ function (Crafty, window, document) {
 				return function (amt, cent_x, cent_y, time) {
 					var bounds = Crafty.map.boundaries(),
                     final_zoom = amt ? zoom * amt : 1;
+					if (!amt) {	// we're resetting to defaults
+						zoom = 1;
+						this._zoom = 1;
+					}
 
 					act.width = bounds.max.x - bounds.min.x;
 					act.height = bounds.max.y - bounds.min.y;
@@ -4717,7 +4747,8 @@ function (Crafty, window, document) {
                 act = {};
 				return function (amt) {
 					var bounds = Crafty.map.boundaries(),
-                    final_zoom = amt ? this._zoom * amt : 1;
+                    final_zoom = amt ? this._zoom * amt : 1,
+					czoom = final_zoom / this._zoom;
 
 					this._zoom = final_zoom;
 					act.width = bounds.max.x - bounds.min.x;
@@ -4727,18 +4758,15 @@ function (Crafty, window, document) {
 						height: act.height * final_zoom
 					}
 					Crafty.viewport.pan('reset');
-					Crafty.stage.inner.style[prop] = 'scale(' + this._zoom + ',' + this._zoom + ')';
-					Crafty.stage.elem.style.width = new_s.width + "px";
-					Crafty.stage.elem.style.height = new_s.height + "px";
+					Crafty.stage.inner.style['transform'] =
+				Crafty.stage.inner.style[prop] = 'scale(' + this._zoom + ',' + this._zoom + ')';
 
 					if (Crafty.canvas._canvas) {
-						Crafty.canvas._canvas.width = new_s.width;
-						Crafty.canvas._canvas.height = new_s.height;
-						Crafty.canvas.context.scale(this._zoom, this._zoom);
+						Crafty.canvas.context.scale(czoom, czoom);
 						Crafty.DrawManager.drawAll();
 					}
-					Crafty.viewport.width = new_s.width;
-					Crafty.viewport.height = new_s.height;
+					//Crafty.viewport.width = new_s.width;
+					//Crafty.viewport.height = new_s.height;
 				}
 			})(),
 			/**@
@@ -4799,6 +4827,10 @@ function (Crafty, window, document) {
 				// under no circumstances should the viewport see something outside the boundary of the 'world'
 				if (!this.clampToEntities) return;
 				var bound = Crafty.map.boundaries();
+				bound.max.x *= this._zoom;
+				bound.min.x *= this._zoom;
+				bound.max.y *= this._zoom;
+				bound.min.y *= this._zoom;
 				if (bound.max.x - bound.min.x > Crafty.viewport.width) {
 					bound.max.x -= Crafty.viewport.width;
 
@@ -4942,6 +4974,11 @@ function (Crafty, window, document) {
 					elem.left = "0px";
 					elem.top = "0px";
 
+					// remove default gray highlighting after touch
+					if (typeof elem.webkitTapHighlightColor != undefined) {
+						elem.webkitTapHighlightColor = "rgba(0,0,0,0)";
+					}
+
 					var meta = document.createElement("meta"),
                     head = document.getElementsByTagName("HEAD")[0];
 
@@ -5023,6 +5060,22 @@ function (Crafty, window, document) {
 				offset = Crafty.DOM.inner(Crafty.stage.elem);
 				Crafty.stage.x = offset.x;
 				Crafty.stage.y = offset.y;
+			},
+
+			/**@
+		 * #Crafty.viewport.reset
+		 * @comp Crafty.stage
+		 *
+		 * @sign public Crafty.viewport.reset()
+		 *
+		 * Resets the viewport to starting values
+		 * Called when scene() is run.
+		 */
+			reset: function () {
+				Crafty.viewport.pan('reset');
+				Crafty.viewport.follow();
+				Crafty.viewport.mouselook('stop');
+				Crafty.viewport.scale();
 			}
 		},
 
@@ -5249,7 +5302,6 @@ function (Crafty, window, document) {
 		}
 	});
 
-
 	Crafty.extend({
 	/**@
     * #Crafty.device
@@ -5405,7 +5457,6 @@ function (Crafty, window, document) {
 		}
 	});
 
-
 	/**@
 * #Sprite
 * @category Graphics
@@ -5538,7 +5589,6 @@ function (Crafty, window, document) {
 			return this;
 		}
 	});
-
 
 	/**@
 * #Canvas
@@ -5708,7 +5758,6 @@ function (Crafty, window, document) {
 		}
 	});
 
-
 	Crafty.extend({
 		over: null, //object mouseover, waiting for out
 		mouseObjs: 0,
@@ -5870,7 +5919,8 @@ function (Crafty, window, document) {
     */
 
 		touchDispatch: function (e) {
-			var type;
+			var type,
+            lastEvent = Crafty.lastEvent;
 
 			if (e.type === "touchstart") type = "mousedown";
 			else if (e.type === "touchmove") type = "mousemove";
@@ -5894,6 +5944,23 @@ function (Crafty, window, document) {
         );
 
 			first.target.dispatchEvent(simulatedEvent);
+
+			// trigger click when it shoud be triggered
+			if (lastEvent != null && lastEvent.type == 'mousedown' && type == 'mouseup') {
+				type = 'click';
+
+				var simulatedEvent = document.createEvent("MouseEvent");
+				simulatedEvent.initMouseEvent(type, true, true, window, 1,
+                first.screenX,
+                first.screenY,
+                first.clientX,
+                first.clientY,
+                false, false, false, false, 0, e.relatedTarget
+            );
+				first.target.dispatchEvent(simulatedEvent);
+			}
+
+			e.preventDefault();
 		},
 
 
@@ -6301,7 +6368,6 @@ function (Crafty, window, document) {
 
 		_keydown: function (e) {
 			if (this._keys[e.key]) {
-				console.log("DOWN");
 				this._movement.x = Math.round((this._movement.x + this._keys[e.key].x) * 1000) / 1000;
 				this._movement.y = Math.round((this._movement.y + this._keys[e.key].y) * 1000) / 1000;
 				this.trigger('NewDirection', this._movement);
@@ -6310,7 +6376,6 @@ function (Crafty, window, document) {
 
 		_keyup: function (e) {
 			if (this._keys[e.key]) {
-				console.log("UP");
 				this._movement.x = Math.round((this._movement.x - this._keys[e.key].x) * 1000) / 1000;
 				this._movement.y = Math.round((this._movement.y - this._keys[e.key].y) * 1000) / 1000;
 				this.trigger('NewDirection', this._movement);
@@ -6328,13 +6393,6 @@ function (Crafty, window, document) {
 				this.y += this._movement.y;
 				this.trigger('Moved', { x: this.x, y: this.y - this._movement.y });
 			}
-		},
-
-		init: function () {
-			this._keyDirection = {};
-			this._keys = {};
-			this._movement = { x: 0, y: 0 };
-			this._speed = { x: 3, y: 3 };
 		},
 
 		/**@
@@ -6356,6 +6414,11 @@ function (Crafty, window, document) {
 	* ~~~
 	*/
 		multiway: function (speed, keys) {
+			this._keyDirection = {};
+			this._keys = {};
+			this._movement = { x: 0, y: 0 };
+			this._speed = { x: 3, y: 3 };
+
 			if (keys) {
 				if (speed.x && speed.y) {
 					this._speed.x = speed.x;
@@ -6371,6 +6434,7 @@ function (Crafty, window, document) {
 			this._keyDirection = keys;
 			this.speed(this._speed);
 
+			this.disableControl();
 			this.enableControl();
 
 			//Apply movement if key is down when created
@@ -6538,83 +6602,6 @@ function (Crafty, window, document) {
 			});
 
 			return this;
-		}
-	});
-
-
-	Crafty.c("Animation", {
-		_reel: null,
-
-		init: function () {
-			this._reel = {};
-		},
-
-		addAnimation: function (label, skeleton) {
-			var key,
-			lastKey = 0,
-			i = 0, j,
-			frame,
-			prev,
-			prop,
-			diff = {},
-			p,
-			temp,
-			frames = [];
-
-			//loop over every frame
-			for (key in skeleton) {
-
-				frame = skeleton[key];
-				prev = skeleton[lastKey] || this;
-				diff = {};
-
-				//find the difference
-				for (prop in frame) {
-					if (typeof frame[prop] !== "number") {
-						diff[prop] = frame[prop];
-						continue;
-					}
-
-					diff[prop] = (frame[prop] - prev[prop]) / (key - lastKey);
-				}
-
-				for (i = +lastKey + 1, j = 1; i <= +key; ++i, ++j) {
-					temp = {};
-					for (p in diff) {
-						if (typeof diff[p] === "number") {
-							temp[p] = prev[p] + diff[p] * j;
-						} else {
-							temp[p] = diff[p];
-						}
-					}
-
-					frames[i] = temp;
-				}
-				lastKey = key;
-			}
-
-			this._reel[label] = frames;
-
-			return this;
-		},
-
-		playAnimation: function (label) {
-			var reel = this._reel[label],
-			i = 0,
-			l = reel.length,
-			prop;
-
-			this.bind("EnterFrame", function e() {
-				for (prop in reel[i]) {
-					this[prop] = reel[i][prop];
-				}
-				i++;
-
-				if (i > l) {
-					this.trigger("AnimationEnd");
-					this.unbind("EnterFrame", e);
-				}
-			});
 		}
 	});
 
@@ -6954,7 +6941,6 @@ function (Crafty, window, document) {
 	}
 
 
-
 	/**@
 * #Color
 * @category Graphics
@@ -7190,6 +7176,7 @@ function (Crafty, window, document) {
 		scene: function (name, intro, outro) {
 			//play scene
 			if (arguments.length === 1) {
+				Crafty.viewport.reset();
 				Crafty("2D").each(function () {
 					if (!this.has("Persist")) this.destroy();
 				});
@@ -7554,7 +7541,6 @@ function (Crafty, window, document) {
 		};
 	})();
 
-
 	Crafty.extend({
 	/**@
 * #Crafty.isometric
@@ -7733,7 +7719,6 @@ function (Crafty, window, document) {
 			}
 		}
 	});
-
 	/**@
 * #Particles
 * @category Graphics
@@ -8094,7 +8079,6 @@ function (Crafty, window, document) {
 			}
 		}
 	});
-
 	Crafty.extend({
 	/**@
 * #Crafty.audio
@@ -8205,7 +8189,8 @@ function (Crafty, window, document) {
 								Crafty.asset(path, audio);
 								this.sounds[i] = {
 									obj: audio,
-									played: 0
+									played: 0,
+									volume: Crafty.audio.volume
 								}
 							}
 
@@ -8225,7 +8210,8 @@ function (Crafty, window, document) {
 							Crafty.asset(url, audio);
 							this.sounds[id] = {
 								obj: audio,
-								played: 0
+								played: 0,
+								volume: Crafty.audio.volume
 							}
 
 						}
@@ -8245,7 +8231,8 @@ function (Crafty, window, document) {
 								Crafty.asset(path, audio);
 								this.sounds[id] = {
 									obj: audio,
-									played: 0
+									played: 0,
+									volume: Crafty.audio.volume
 								}
 							}
 
@@ -8284,8 +8271,9 @@ function (Crafty, window, document) {
 			play: function (id, repeat, volume) {
 				if (repeat == 0 || !Crafty.support.audio || !this.sounds[id]) return;
 				var s = this.sounds[id];
-				s.obj.volume = volume || Crafty.audio.volume;
+				s.volume = s.obj.volume = volume || Crafty.audio.volume;
 				if (s.obj.currentTime) s.obj.currentTime = 0;
+				if (this.muted) s.obj.volume = 0;
 				s.obj.play();
 				s.played++;
 				s.obj.addEventListener("ended", function () {
@@ -8322,9 +8310,24 @@ function (Crafty, window, document) {
 				s = this.sounds[id];
 				if (!s.obj.paused) s.obj.pause();
 			},
+			/**
+        * #Crafty.audio._mute
+        * @sign public this Crafty.audio._mute([Boolean mute])
+        *
+        * Mute or unmute every Audio instance that is playing.
+        */
+			_mute: function (mute) {
+				if (!Crafty.support.audio) return;
+				var s;
+				for (var i in this.sounds) {
+					s = this.sounds[i];
+					s.obj.volume = mute ? 0 : s.volume;
+				}
+				this.muted = mute;
+			},
 			/**@
-        * #Crafty.audio.mute
-        * @sign public this Crafty.audio.mute([Boolean mute])
+        * #Crafty.audio.toggleMute
+        * @sign public this Crafty.audio.toggleMute()
         *
         * Mute or unmute every Audio instance that is playing. Toggles between
         * pausing or playing depending on the state.
@@ -8332,31 +8335,48 @@ function (Crafty, window, document) {
         * @example
         * ~~~
         * //toggle mute and unmute depending on current state
+        * Crafty.audio.toggleMute();
+        * ~~~
+        */
+			toggleMute: function () {
+				if (!this.muted) {
+					this._mute(true);
+				} else {
+					this._mute(false);
+				}
+
+			},
+			/**@
+        * #Crafty.audio.mute
+        * @sign public this Crafty.audio.mute()
+        *
+        * Mute every Audio instance that is playing.
+        *
+        * @example
+        * ~~~
         * Crafty.audio.mute();
         * ~~~
         */
 			mute: function () {
-				if (!Crafty.support.audio) return;
-				var s;
-				if (!this.muted) {
-					for (var i in this.sounds) {
-						s = this.sounds[i];
-						s.obj.pause();
-					}
-					this.muted = true;
-				}else {
-					for (var i in this.sounds) {
-						s = this.sounds[i];
-						if (s.obj.currentTime && s.obj.currentTime > 0)
-							this.sounds[i].obj.play();
-					}
-					this.muted = false;
-				}
-
+				this._mute(true);
+			},
+			/**@
+        * #Crafty.audio.unmute
+        * @sign public this Crafty.audio.unmute()
+        *
+        * Unmute every Audio instance that is playing.
+        *
+        * @example
+        * ~~~
+        * Crafty.audio.unmute();
+        * ~~~
+        */
+			unmute: function () {
+				this._mute(false);
 			}
+
 		}
 	});
-
 	/**@
 * #Text
 * @category Graphics
@@ -8511,7 +8531,6 @@ function (Crafty, window, document) {
 			return this;
 		}
 	});
-
 
 	Crafty.extend({
 	/**@
@@ -8884,7 +8903,6 @@ function (Crafty, window, document) {
 		}
 	});
 
-
 	/**@
 * #Crafty.math
 * @category 2D
@@ -9139,7 +9157,7 @@ function (Crafty, window, document) {
 	 * #.angleBetween( )
 	 *
 	 * Calculates the angle between the passed vector and this vector, using <0,0> as the point of reference.
-	 * Angles returned have the range (−π, π].
+	 * Angles returned have the range (âˆ’Ï€, Ï€].
 	 *
 	 * @public
 	 * @sign public {Number} angleBetween(Vector2D);
@@ -9484,7 +9502,7 @@ function (Crafty, window, document) {
 	 * #.tripleProduct( )
 	 *
 	 * Calculates the triple product of three vectors.
-	 * triple vector product = b(a•c) - a(b•c)
+	 * triple vector product = b(aâ€¢c) - a(bâ€¢c)
 	 *
 	 * @public
 	 * @static
@@ -9903,7 +9921,6 @@ function (Crafty, window, document) {
 		return Matrix2D;
 	})();
 
-
 	/**@
 * #Crafty Time
 * @category Utilities
@@ -9970,6 +9987,4 @@ function (Crafty, window, document) {
 		}
 	});
 
-
 });
-
