@@ -1,7 +1,0 @@
-#External Dependencies
-#Mon May 07 22:10:32 CEST 2012
-C\:\\Program\ Files\\Java\\jdk1.7.0\\jre\\lib\\rt.jar=src\\main\\scala\\bootstrap\\liftweb\\Boot.scala;src\\main\\scala\\code\\lib\\DependencyFactory.scala;src\\main\\scala\\code\\snippet\\HelloWorld.scala
-C\:\\cc\\hosted\\lib_managed\\scala_2.9.0-1\\compile\\lift-util_2.9.0-1-2.4.jar=src\\main\\scala\\bootstrap\\liftweb\\Boot.scala;src\\main\\scala\\code\\lib\\DependencyFactory.scala;src\\main\\scala\\code\\snippet\\HelloWorld.scala
-C\:\\cc\\hosted\\lib_managed\\scala_2.9.0-1\\compile\\lift-common_2.9.0-1-2.4.jar=src\\main\\scala\\bootstrap\\liftweb\\Boot.scala;src\\main\\scala\\code\\snippet\\HelloWorld.scala
-C\:\\cc\\hosted\\lib_managed\\scala_2.9.0-1\\compile\\lift-webkit_2.9.0-1-2.4.jar=src\\main\\scala\\bootstrap\\liftweb\\Boot.scala;src\\main\\scala\\code\\lib\\DependencyFactory.scala
-C\:\\cc\\hosted\\project\\boot\\scala-2.9.0-1\\lib\\scala-library.jar=src\\main\\scala\\bootstrap\\liftweb\\Boot.scala;src\\main\\scala\\code\\lib\\DependencyFactory.scala;src\\main\\scala\\code\\snippet\\HelloWorld.scala

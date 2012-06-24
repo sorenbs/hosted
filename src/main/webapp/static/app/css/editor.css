@@ -21,7 +21,7 @@
 	background-color: red;
 	height: 500px;
 	position: fixed;
-	top: 60px;
+	top: 40px;
 	right: 0;
 }
 
@@ -31,7 +31,7 @@
 	background-color: red;
 	height: 200px;
 	position: fixed;
-	top: 560px;
+	top: 540px;
 	right: 0;
 }
 
@@ -60,3 +60,8 @@
 		margin: -300px -197px;
 		-webkit-transition: all .2s;
 	}
+
+body
+{
+	padding-top: 40px;
+}

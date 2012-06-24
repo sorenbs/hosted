@@ -13,6 +13,8 @@ import net.liftweb.mongodb.MongoDB
 import net.liftweb.mongodb.DefaultMongoIdentifier
 import com.mongodb.Mongo
 import com.foursquare.rogue.Rogue._
+import code.model.CraftCode
+import org.joda.time.DateTime
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -97,10 +99,19 @@ LiftRules.htmlProperties.default.set((r: Req) =>
             .findAndModify(_.counter inc 1)
             .updateOne(returnNew = true)
             .asInstanceOf[scala.Some[code.model.Counter]].get.counter.value
+          
+          val secretId = StringHelpers.randomString(16);
 
 
-          code.model.Craft.createRecord.shortId(nextId).save
-          S.redirectTo("/craft/" + nextId + "/0")
+          code.model.Craft.createRecord
+          	.shortId(nextId)
+          	.secretId(secretId)
+          	.code(CraftCode.createRecord
+          	    .code("")
+          	    .comment("")
+          	    .created(new DateTime().toGregorianCalendar()) :: Nil)
+          	.save
+          S.redirectTo("/craft/" + secretId + "/0")
         }
   }
 
