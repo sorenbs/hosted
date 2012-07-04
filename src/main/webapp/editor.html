@@ -199,7 +199,7 @@ browser: true, devel: true, passfail: true, bitwise: true, continue: true, debug
             				for (var c in historyData) {
             					var date = new Date(Date.parse(historyData[c].created));
             					var date_str = ('0' + date.getHours()).substr(-2, 2) + ':' + ('0' + date.getMinutes()).substr(-2, 2) + " " + ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"][date.getMonth()] + " " + date.getDate() ;
-            					historyMenu.append("<li><a href='" + historyData[c].version + "' title='" + historyData[c].comment + "'>" + date_str + " " + historyData[c].comment.substring(0, Math.min(50, historyData[c].comment.length)) + "</a></li>");
+            					historyMenu.append("<li><a href='" + historyData[c].version + "' title='" + historyData[c].comment + "'> [" + historyData[c].version + "] " + date_str + " " + historyData[c].comment.substring(0, Math.min(50, historyData[c].comment.length)) + "</a></li>");
             				}
 
             			}
@@ -223,7 +223,7 @@ browser: true, devel: true, passfail: true, bitwise: true, continue: true, debug
             		url: "/api/craft/save/" + id,
             		data: { code: codeArea.value },
             		success: function (data) {
-						log("Saved version " + data.version)
+            			log("Saved version " + data.version);
             		}
             	});
 			}

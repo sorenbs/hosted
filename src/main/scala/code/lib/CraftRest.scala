@@ -31,7 +31,7 @@ object CraftRest extends RestHelper {
               craft.secretId.value,
               version.toInt,
               craft.code.get(version.toInt).code.value,
-              craft.code.value.zipWithIndex.map(t => 
+              craft.code.value.zipWithIndex.reverse.map(t => 
                 HistoryItem(
                     t._2, 
                     t._1.comment.value, 
