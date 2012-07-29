@@ -45,6 +45,8 @@ libraryDependencies ++= {
 // when using the sbt web app plugin 0.2.4+, use "container" instead of "jetty" for the context
 // Customize any further dependencies as desired
 libraryDependencies ++= Seq(
+"com.foursquare" %% "rogue"               % "1.0.28" intransitive(),
+    "net.liftweb" %% "lift-mongodb-record" % "2.4" % "compile->default",
   "org.eclipse.jetty" % "jetty-webapp" % "8.0.4.v20111024" % "container",   // For Jetty 8
   //"org.eclipse.jetty" % "jetty-webapp" % "7.3.0.v20110203" % "container", // For Jetty 7
   //"org.mortbay.jetty" % "jetty" % "6.1.22" % "jetty,test",                // For Jetty 6, add scope test to make jetty avl. for tests

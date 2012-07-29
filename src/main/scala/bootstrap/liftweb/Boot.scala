@@ -15,6 +15,7 @@ import com.mongodb.Mongo
 import com.foursquare.rogue.Rogue._
 import code.model.CraftCode
 import org.joda.time.DateTime
+import net.liftweb.http.provider.HTTPParam
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -25,7 +26,7 @@ class Boot {
     
     
     val srvr = new ServerAddress(
-	  Props.get("mongodb.url") openOr "craftybuilder.com",
+	  Props.get("mongodb.url") openOr "localhost",
 	  Props.getInt("mongodb.port") openOr 27017)
 	
     MongoDB.defineDbAuth(
@@ -35,7 +36,9 @@ class Boot {
         Props.get("mongodb.user") openOr "CraftyBuilder",
         Props.get("mongodb.pass") openOr System.getenv("builder.mongodb.pass")) 
     
-    
+    if((code.model.Counter.where(_.name eqs("Craft"))).count == 0) {
+      code.model.Counter.createRecord.name("Craft").counter(0).save(true)
+    }
 
     // where to search snippet
     LiftRules.addToPackages("code")
@@ -122,4 +125,12 @@ LiftRules.htmlProperties.default.set((r: Req) =>
     case RewriteRequest( ParsePath("craft" :: id :: version :: Nil, _, _, _), _, _ ) =>
       RewriteResponse( "editor" :: Nil, Map("simpleId" -> id, "version" -> version))
   })
+  
+  LiftRules.supplimentalHeaders = s => s.addHeaders( 
+      List( 
+        HTTPParam("Access-Control-Allow-Origin", "*"), 
+        HTTPParam("Access-Control-Allow-Credentials", "true"), 
+        HTTPParam("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS"), 
+        HTTPParam("Access-Control-Allow-Headers", "Keep-Alive,User-Agent,X-Requested-With,.......") 
+      )) 
 }

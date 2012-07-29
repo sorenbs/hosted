@@ -9,6 +9,7 @@ import mongodb.record.BsonRecord
 import mongodb.record.BsonMetaRecord
 import json.Extraction
 import json.JsonAST.JValue
+import net.liftweb.mongodb.record.BsonMetaRecord
 
 class Craft extends MongoRecord[Craft] with MongoId[Craft] {
   def meta = Craft
@@ -16,12 +17,17 @@ class Craft extends MongoRecord[Craft] with MongoId[Craft] {
   object shortId extends IntField(this)
   object secretId extends StringField(this,16)
   object code extends BsonRecordListField(this,CraftCode)
+  object images extends BsonRecordListField(this,ImageData)
   
 }
-object Craft extends Craft with MongoMetaRecord[Craft] {
+object Craft extends Craft with MongoMetaRecord[Craft]
+
+class ImageData private () extends BsonRecord[ImageData] {
+  def meta = ImageData
+  
+  object url extends StringField(this, 1024)
 }
-
-
+object ImageData extends ImageData with BsonMetaRecord[ImageData]
 
 class CraftCode private () extends BsonRecord[CraftCode] {
   def meta = CraftCode
