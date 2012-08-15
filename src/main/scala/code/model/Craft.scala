@@ -26,6 +26,7 @@ class ImageData private () extends BsonRecord[ImageData] {
   def meta = ImageData
   
   object url extends StringField(this, 1024)
+  object name extends StringField(this, 1024)
 }
 object ImageData extends ImageData with BsonMetaRecord[ImageData]
 

@@ -13,14 +13,18 @@ import com.foursquare.rogue.Rogue._
 import org.joda.time.DateTime
 import java.util.Date
 import java.util.Calendar
+import java.io.File
+import java.io.FileOutputStream
 
 object CraftRest extends RestHelper {
   case class CraftParams(id: String, version: Int)
   case class HistoryItem(version:Int, comment:String, created:Date)
-  case class CraftResponse(id:String, version:Int, code:String, history: List[HistoryItem])
+  case class ImageItem(url:String, name:String)
+  case class ImageSavedResponse(name: String)
+  case class CraftResponse(id:String, version:Int, code:String, history: List[HistoryItem], images: List[ImageItem])
   case class ErrorResponse(error:String)
   case class CodeSavedResponse(id:String, version:Int, newVersion:HistoryItem)
-  case class ImagesResponse(urls: List[ImageData])
+  case class ImagesResponse(images: List[ImageData])
   case class TemplateItem(name: String, code: String)
   case class TemplatesResponse(templates: List[TemplateItem])
   
@@ -49,7 +53,8 @@ object CraftRest extends RestHelper {
                 HistoryItem(
                     t._2, 
                     t._1.comment.value, 
-                    t._1.created.value.getTime())))
+                    t._1.created.value.getTime())),
+              craft.images.value.map(i => ImageItem(i.url.value, i.name.value)))
           )
         else
           Extraction.decompose(ErrorResponse("That version does not exist"))
@@ -97,6 +102,26 @@ object CraftRest extends RestHelper {
       case Some(craft) =>
         Extraction.decompose(ImagesResponse(craft.images.value))
       case _ => Extraction.decompose(ErrorResponse("No code found!!!"))
+    }
+    
+    //
+    // Post: /ase8fsd789gf789gxs9dg/image/7
+    //
+    // version is the version this revision is based on. Used for revision graph
+    case id :: "image" :: version :: Nil Post json => {
+      val file = json.uploadedFiles.head
+      Craft.where(_.secretId eqs id).modify(_.images.push(ImageData.createRecord
+          .url("...")
+          .name(file.name)
+          )).updateMulti
+          
+          val oFile = new File("src/main/webapp/images",  file.name)
+              val output = new FileOutputStream(oFile)
+              output.write(file.file)
+              output.close()
+          
+          Extraction.decompose(ImageSavedResponse(file.name))
+      
     }
     
     //
