@@ -84,6 +84,10 @@ object CraftRest extends RestHelper {
         	Extraction.decompose(ErrorResponse("Wrong ID"))
         }
       } else {
+        if(Craft.where(_.secretId eqs id).and(_.readOnly eqs true).count > 0) {
+          Extraction.decompose(ErrorResponse("This is ReadOnly!"))
+        } else {
+        
 	      Craft.where(_.secretId eqs id).modify(_.code push(CraftCode.createRecord
 	          .code(json.param("code").open_!)
 	          .comment(json.param("comment").openOr(""))
@@ -93,6 +97,8 @@ object CraftRest extends RestHelper {
 	      val newVersion = Craft.where(_.secretId eqs id).get().get.code.value.length - 1
 	      
 	      Extraction.decompose(CodeSavedResponse(id, newVersion, HistoryItem(newVersion, json.param("comment").openOr(""), new DateTime().toGregorianCalendar().getTime)))
+
+        }
       }
     }
     
@@ -110,6 +116,31 @@ object CraftRest extends RestHelper {
       	    .code(codeString)
       	    .comment("Forked from " + id + ":" + version)
       	    .created(created) :: Nil)
+      	.save
+      	Extraction.decompose(CraftResponse(secretId, 0, codeString, List(HistoryItem(0, json.param("comment").openOr(""), created.getTime)), craft.images.value.map(i => ImageItem(i.url.value, i.name.value))))
+      }
+      case _ => {
+        Extraction.decompose(ErrorResponse("No code found!!! Clone failed"))
+      }
+    }
+    
+    //
+    // Post: /ase8fsd789gf789gxs9dg/publish/7
+    //
+    case id :: "publish" :: version :: Nil Post json => (Craft.where(_.secretId eqs id)).get match {
+      case Some(craft) => {
+        val secretId = StringHelpers.randomString(16);
+        val created = new DateTime().toGregorianCalendar()
+        val codeString = craft.code.get(version.toInt).code.value
+        code.model.Craft.createRecord
+      	.secretId(secretId)
+      	.code(CraftCode.createRecord
+      	    .code(codeString)
+      	    .comment("Forked from " + id + ":" + version)
+      	    .created(created) :: Nil)
+      	.publishedFromId(id)
+      	.publishedFromVersion(version.toInt)
+      	.readOnly(true)
       	.save
       	Extraction.decompose(CraftResponse(secretId, 0, codeString, List(HistoryItem(0, json.param("comment").openOr(""), created.getTime)), craft.images.value.map(i => ImageItem(i.url.value, i.name.value))))
       }

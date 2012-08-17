@@ -3,7 +3,7 @@ package model
 
 import net.liftweb._
 import mongodb.record.{MongoMetaRecord, MongoId, MongoRecord}
-import record.field.{StringField, EnumNameField, LongField, IntField, DateTimeField}
+import record.field.{StringField, EnumNameField, LongField, IntField, DateTimeField, BooleanField}
 import mongodb.record.field.{MongoListField, BsonRecordField, BsonRecordListField,MongoMapField}
 import mongodb.record.BsonRecord
 import mongodb.record.BsonMetaRecord
@@ -18,6 +18,9 @@ class Craft extends MongoRecord[Craft] with MongoId[Craft] {
   object secretId extends StringField(this,16)
   object code extends BsonRecordListField(this,CraftCode)
   object images extends BsonRecordListField(this,ImageData)
+  object publishedFromId extends StringField(this, 16)
+  object publishedFromVersion extends IntField(this)
+  object readOnly extends BooleanField(this)
   
 }
 object Craft extends Craft with MongoMetaRecord[Craft]
