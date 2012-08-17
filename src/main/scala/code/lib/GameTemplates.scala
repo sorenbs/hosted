@@ -52,7 +52,7 @@ Crafty.e("LeftPaddle, DOM, 2D, Text")
     //Crafty.canvas();
 
     //turn the sprite map into usable components
-    Crafty.sprite(16, "sprite.png", {
+    Crafty.sprite(16, "http://localhost:8080/images/sprite.png", {
         grass1: [0, 0],
         grass2: [1, 0],
         grass3: [2, 0],
@@ -65,29 +65,7 @@ Crafty.e("LeftPaddle, DOM, 2D, Text")
         banana: [4, 0],
         empty: [4, 0]
     });
-    /*
-    function deepCopy(obj) {
-                    var newObj = (obj instanceof Array) ? [] : {};
-                    for (i in obj) {
-                        if (i == 'componentStore') continue;
-                        if(!obj.hasOwnProperty(i)) continue;
-                        if (obj[i] && typeof obj[i] == "object") {
-                            newObj[i] = deepCopy(obj[i]);
-                        } else newObj[i] = obj[i]
-                    }
-                    return newObj;
-                };
-                
-    var a = {
-        e: function() {
-            return "z";
-        }
-    }
-    var b = deepCopy(a);
     
-    console.log(a.e());
-    console.log("e" in b);
-    */
     //method to generate the map
     function generateWorld() {
         //loop through all tiles
@@ -101,13 +79,14 @@ Crafty.e("LeftPaddle, DOM, 2D, Text")
                 //grid of bushes
                 if((i % 2 === 0) && (j % 2 === 0)) {
                     Crafty.e("2D, DOM, solid, bush1")
-                        .attr({x: i * 16, y: j * 16, z: 2000})
+                        .attr({x: i * 16, y: j * 16, z: 2000});
                 }
 
                 //create a fence of bushes
-                if(i === 0 || i === 24 || j === 0 || j === 20)
+				if(i === 0 || i === 24 || j === 0 || j === 20) {
                     Crafty.e("2D, DOM, solid, bush" + Crafty.math.randomInt(1, 2))
                     .attr({ x: i * 16, y: j * 16, z: 2 });
+				}
 
                 //generate some nice flowers within the boundaries of the outer bushes
                 if (i > 0 && i < 24 && j > 0 && j < 20
@@ -118,10 +97,8 @@ Crafty.e("LeftPaddle, DOM, 2D, Text")
                             .attr({ x: i * 16, y: j * 16, z: 1000 })
                             .animate("wind", 0, 1, 3)
                             .animate('wind', 80, -1)
-                            .bind('explode', function() {
-                                this.destroy();
-                            })
                             .collision();
+                            f.bind('explode', f.destroy);
                     if(f.hit('solid')) {
                         f.destroy();
                     }
@@ -133,7 +110,7 @@ Crafty.e("LeftPaddle, DOM, 2D, Text")
     //the loading screen that will display while our assets load
     Crafty.scene("loading", function () {
         //load takes an array of assets and a callback when complete
-        Crafty.load(["sprite.png"], function () {
+        Crafty.load(["http://localhost:8080/images/sprite.png"], function () {
             Crafty.scene("main"); //when everything is loaded, run the main scene
         });
 
@@ -196,19 +173,23 @@ Crafty.e("LeftPaddle, DOM, 2D, Text")
                     this.destroy();
 
                     //Create fire from the explosion
-                    for(var i = this.col() - 2; i < this.col()+3; i++)
-                        Crafty.e("BananaFire").attr({ z:9000 }).col(i).row(this.row())
-                    for(var i = this.row() - 2; i < this.row()+3; i++)
-                        Crafty.e("BananaFire").attr({ z:9000 }).col(this.col()).row(i)
+					for(var i = this.col() - 2; i < this.col()+3; i++) {
+                        Crafty.e("BananaFire").attr({ z:9000 }).col(i).row(this.row());
+					}
+					for(var i = this.row() - 2; i < this.row()+3; i++) {
+                        Crafty.e("BananaFire").attr({ z:9000 }).col(this.col()).row(i);
+					}
                 });
         },
 
         BananaBomb: function() {
             //Create shadow fire to help the AI
-            for(var i = this.col() - 2; i < this.col()+3; i++)
-                Crafty.e("ShadowBananaFire").attr({ z:9000 }).col(i).row(this.row())
-            for(var i = this.row() - 2; i < this.row()+3; i++)
-                Crafty.e("ShadowBananaFire").attr({ z:9000 }).col(this.col()).row(i)
+			for(var i = this.col() - 2; i < this.col()+3; i++) {
+                Crafty.e("ShadowBananaFire").attr({ z:9000 }).col(i).row(this.row());
+			}
+			for(var i = this.row() - 2; i < this.row()+3; i++) {
+                Crafty.e("ShadowBananaFire").attr({ z:9000 }).col(this.col()).row(i);
+			}
             return this;
         }
     });
@@ -246,24 +227,25 @@ Crafty.e("LeftPaddle, DOM, 2D, Text")
     Crafty.c('Grid', {
         _cellSize: 16,
         Grid: function(cellSize) {
-            if(cellSize) this._cellSize = cellSize;
+			if(cellSize) {
+				this._cellSize = cellSize;
+			}
             return this;
         },
         col: function(col) {
             if(arguments.length === 1) {
                 this.x = this._cellSize * col;
                 return this;
-            } else {
-                return Math.round(this.x / this._cellSize);
-            }
+            } 
+            return Math.round(this.x / this._cellSize);
         },
         row: function(row) {
             if(arguments.length === 1) {
                 this.y = this._cellSize * row;
                 return this;
-            } else {
-                return Math.round(this.y / this._cellSize);
             }
+			return Math.round(this.y / this._cellSize);
+
         },      
         snap: function(){
             this.x = Math.round(this.x/this._cellSize) * this._cellSize;
@@ -278,8 +260,9 @@ Crafty.e("LeftPaddle, DOM, 2D, Text")
         _inShadow: false,
 
         AIControls: function (speed) {
-            if (speed) this._speed = speed;
-
+			if (speed) {
+				this._speed = speed;
+			}
             //functions to determine if there is a free path in some direction
             var AIScope = this;
             var pathTester = Crafty.e('2D, empty, Collision').attr({z:30000}).collision();
@@ -318,11 +301,11 @@ Crafty.e("LeftPaddle, DOM, 2D, Text")
                         //change direction
                         if(Crafty.math.randomInt(0, 2) === 0) {
                             if(nextDirection === 'down' || nextDirection === 'up') {
-                                if(PathTest.left()) { nextDirection = 'left' }
-                                else if(PathTest.right()) { nextDirection = 'right' }
+                                if(PathTest.left()) { nextDirection = 'left'; }
+                                else if(PathTest.right()) { nextDirection = 'right'; }
                             }else{
-                                if(PathTest.up()) { nextDirection = 'up' }
-                                else if(PathTest.down()) { nextDirection = 'down' }
+                                if(PathTest.up()) { nextDirection = 'up'; }
+                                else if(PathTest.down()) { nextDirection = 'down'; }
                             }
                         }
                         if(bombWillHit() &&
@@ -341,10 +324,10 @@ Crafty.e("LeftPaddle, DOM, 2D, Text")
                 this._move = nextDirection;
 
                 if(PathTest[this._move]()) {
-                    if (this._move == "right") this.x += this._speed;
-                    else if (this._move == "left") this.x -= this._speed;
-                    else if (this._move == "up") this.y -= this._speed;
-                    else if (this._move == "down") this.y += this._speed;
+					if (this._move == "right") {this.x += this._speed;}
+					else if (this._move == "left") {this.x -= this._speed;}
+					else if (this._move == "up") {this.y -= this._speed;}
+					else if (this._move == "down") {this.y += this._speed;}
                 }
             })
             .onHit("ShadowBananaFire", function () {
@@ -369,20 +352,24 @@ Crafty.e("LeftPaddle, DOM, 2D, Text")
                 .bind("NewDirection",
                     function (direction) {
                         if (direction.x < 0) {
-                            if (!this.isPlaying("walk_left"))
+							if (!this.isPlaying("walk_left")) {
                                 this.stop().animate("walk_left", 10, -1);
+							}
                         }
                         if (direction.x > 0) {
-                            if (!this.isPlaying("walk_right"))
+							if (!this.isPlaying("walk_right")) {
                                 this.stop().animate("walk_right", 10, -1);
+							}
                         }
                         if (direction.y < 0) {
-                            if (!this.isPlaying("walk_up"))
+							if (!this.isPlaying("walk_up")) {
                                 this.stop().animate("walk_up", 10, -1);
+							}
                         }
                         if (direction.y > 0) {
-                            if (!this.isPlaying("walk_down"))
+							if (!this.isPlaying("walk_down")) {
                                 this.stop().animate("walk_down", 10, -1);
+							}
                         }
                         if(!direction.x && !direction.y) {
                             this.stop();
@@ -406,7 +393,7 @@ Crafty.e("LeftPaddle, DOM, 2D, Text")
         },
         
         rightControls: function(speed) {
-            this.multiway(speed, {UP_ARROW: -90, DOWN_ARROW: 90, RIGHT_ARROW: 0, LEFT_ARROW: 180})
+            this.multiway(speed, {UP_ARROW: -90, DOWN_ARROW: 90, RIGHT_ARROW: 0, LEFT_ARROW: 180});
             return this;
         }
         
@@ -418,7 +405,7 @@ Crafty.e("LeftPaddle, DOM, 2D, Text")
         },
         
         leftControls: function(speed) {
-            this.multiway(speed, {W: -90, S: 90, D: 0, A: 180})
+            this.multiway(speed, {W: -90, S: 90, D: 0, A: 180});
             return this;
         }
         

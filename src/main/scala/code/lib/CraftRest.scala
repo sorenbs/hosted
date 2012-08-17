@@ -15,6 +15,7 @@ import java.util.Date
 import java.util.Calendar
 import java.io.File
 import java.io.FileOutputStream
+import sun.security.util.Length
 
 object CraftRest extends RestHelper {
   case class CraftParams(id: String, version: Int)
@@ -68,7 +69,7 @@ object CraftRest extends RestHelper {
     case id :: "code" :: version :: Nil Post json => {
       if(Craft.where(_.secretId eqs id).count == 0) {
         if(id == "0") {
-          //Asume the client want's us to create new Craft
+          //Asume the client want's us to create a new Craft
           val secretId = StringHelpers.randomString(16);
           val created = new DateTime().toGregorianCalendar()
           code.model.Craft.createRecord
@@ -92,6 +93,28 @@ object CraftRest extends RestHelper {
 	      val newVersion = Craft.where(_.secretId eqs id).get().get.code.value.length - 1
 	      
 	      Extraction.decompose(CodeSavedResponse(id, newVersion, HistoryItem(newVersion, json.param("comment").openOr(""), new DateTime().toGregorianCalendar().getTime)))
+      }
+    }
+    
+    //
+    // Post: /ase8fsd789gf789gxs9dg/fork/7
+    //
+    case id :: "fork" :: version :: Nil Post json => (Craft.where(_.secretId eqs id)).get match {
+      case Some(craft) => {
+        val secretId = StringHelpers.randomString(16);
+        val created = new DateTime().toGregorianCalendar()
+        val codeString = craft.code.get(version.toInt).code.value
+        code.model.Craft.createRecord
+      	.secretId(secretId)
+      	.code(CraftCode.createRecord
+      	    .code(codeString)
+      	    .comment("Forked from " + id + ":" + version)
+      	    .created(created) :: Nil)
+      	.save
+      	Extraction.decompose(CraftResponse(secretId, 0, codeString, List(HistoryItem(0, json.param("comment").openOr(""), created.getTime)), craft.images.value.map(i => ImageItem(i.url.value, i.name.value))))
+      }
+      case _ => {
+        Extraction.decompose(ErrorResponse("No code found!!! Clone failed"))
       }
     }
     
