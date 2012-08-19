@@ -16,23 +16,27 @@ import java.util.Calendar
 import java.io.File
 import java.io.FileOutputStream
 import sun.security.util.Length
+import java.io.FileInputStream
 
 object CraftRest extends RestHelper {
   case class CraftParams(id: String, version: Int)
   case class HistoryItem(version:Int, comment:String, created:Date)
-  case class ImageItem(url:String, name:String)
-  case class ImageSavedResponse(name: String)
-  case class CraftResponse(id:String, version:Int, code:String, history: List[HistoryItem], images: List[ImageItem])
+  case class ImageItem(name:String, path:String)
+  case class ImageSavedResponse(name: String, path: String)
+  case class CraftResponse(id:String, version:Int, code:String, history: List[HistoryItem], images: List[ImageItem], readOnly:Boolean)
   case class ErrorResponse(error:String)
   case class CodeSavedResponse(id:String, version:Int, newVersion:HistoryItem)
   case class ImagesResponse(images: List[ImageData])
-  case class TemplateItem(name: String, code: String)
-  case class TemplatesResponse(templates: List[TemplateItem])
+  case class TemplateItem(name:String, id:String, version:Int)
+  case class TemplatesResponse(templates:List[TemplateItem])
   
+  ///
+  /// Get: /api/templates
+  ///
   serve("api" / "templates" prefix {
     case Nil JsonGet _ => Extraction.decompose(TemplatesResponse(List(
-        TemplateItem("Pong",GameTemplates.Pong), 
-        TemplateItem("BananaBomber", GameTemplates.bnanaBomber)
+        TemplateItem("Pong", "CK3N5TUGKRAKTJ5Y", 0), 
+        TemplateItem("BananaBomber", "SEYRMMRKS1DCOUYX", 0)
         )))
     case _ => Extraction.decompose(ErrorResponse("Not Valid blaHHH"))
   })
@@ -55,7 +59,8 @@ object CraftRest extends RestHelper {
                     t._2, 
                     t._1.comment.value, 
                     t._1.created.value.getTime())),
-              craft.images.value.map(i => ImageItem(i.url.value, i.name.value)))
+              craft.images.value.map(i => ImageItem(i.name.value, i.url.value)),
+              craft.readOnly.value)
           )
         else
           Extraction.decompose(ErrorResponse("That version does not exist"))
@@ -110,14 +115,25 @@ object CraftRest extends RestHelper {
         val secretId = StringHelpers.randomString(16);
         val created = new DateTime().toGregorianCalendar()
         val codeString = craft.code.get(version.toInt).code.value
+        
         code.model.Craft.createRecord
       	.secretId(secretId)
+      	.images(craft.images.value.map(i => ImageData.createRecord.name(i.name.value).url("/images/" + secretId + "/" + i.name.value) ))
       	.code(CraftCode.createRecord
       	    .code(codeString)
       	    .comment("Forked from " + id + ":" + version)
       	    .created(created) :: Nil)
       	.save
-      	Extraction.decompose(CraftResponse(secretId, 0, codeString, List(HistoryItem(0, json.param("comment").openOr(""), created.getTime)), craft.images.value.map(i => ImageItem(i.url.value, i.name.value))))
+      	
+      	copyImages(id, secretId)
+      	
+      	Extraction.decompose(CraftResponse(
+      	    secretId, 
+      	    0, 
+      	    codeString, 
+      	    List(HistoryItem(0, json.param("comment").openOr(""), created.getTime)), 
+      	    craft.images.value.map(i => ImageItem(i.name.value, i.url.value)),
+            false))
       }
       case _ => {
         Extraction.decompose(ErrorResponse("No code found!!! Clone failed"))
@@ -132,8 +148,10 @@ object CraftRest extends RestHelper {
         val secretId = StringHelpers.randomString(16);
         val created = new DateTime().toGregorianCalendar()
         val codeString = craft.code.get(version.toInt).code.value
+        
         code.model.Craft.createRecord
       	.secretId(secretId)
+      	.images(craft.images.value.map(i => ImageData.createRecord.name(i.name.value).url("/images/" + secretId + "/" + i.name.value) ))
       	.code(CraftCode.createRecord
       	    .code(codeString)
       	    .comment("Forked from " + id + ":" + version)
@@ -142,7 +160,16 @@ object CraftRest extends RestHelper {
       	.publishedFromVersion(version.toInt)
       	.readOnly(true)
       	.save
-      	Extraction.decompose(CraftResponse(secretId, 0, codeString, List(HistoryItem(0, json.param("comment").openOr(""), created.getTime)), craft.images.value.map(i => ImageItem(i.url.value, i.name.value))))
+      	
+      	copyImages(id, secretId)
+      	
+      	Extraction.decompose(CraftResponse(
+      	    secretId, 
+      	    0, 
+      	    codeString, 
+      	    List(HistoryItem(0, json.param("comment").openOr(""), created.getTime)), 
+      	    craft.images.value.map(i => ImageItem(i.name.value, i.url.value)),
+              craft.readOnly.value))
       }
       case _ => {
         Extraction.decompose(ErrorResponse("No code found!!! Clone failed"))
@@ -150,31 +177,29 @@ object CraftRest extends RestHelper {
     }
     
     //
-    // Get: /ase8fsd789gf789gxs9dg/images
-    //
-    case id :: "images" :: Nil JsonGet _ => (Craft.where(_.secretId eqs id)).get match {
-      case Some(craft) =>
-        Extraction.decompose(ImagesResponse(craft.images.value))
-      case _ => Extraction.decompose(ErrorResponse("No code found!!!"))
-    }
-    
-    //
     // Post: /ase8fsd789gf789gxs9dg/image/7
     //
-    // version is the version this revision is based on. Used for revision graph
     case id :: "image" :: version :: Nil Post json => {
       val file = json.uploadedFiles.head
+      val escapedId = id.replace('.', '-').replace('/', '-')
+      val basePath = "src/main/webapp/images/"
+      val path = basePath + escapedId
+      val clientPath = "/images/" + id.replace('.', '-').replace('/', '-') + "/" + file.name 
+      new File(basePath).mkdir
+      new File(path).mkdir
+      val oFile = new File(path,  file.name)
+      val output = new FileOutputStream(oFile)
+      output.write(file.file)
+      output.close()
+      
       Craft.where(_.secretId eqs id).modify(_.images.push(ImageData.createRecord
-          .url("...")
+          .url(clientPath)
           .name(file.name)
           )).updateMulti
           
-          val oFile = new File("src/main/webapp/images",  file.name)
-              val output = new FileOutputStream(oFile)
-              output.write(file.file)
-              output.close()
+         
           
-          Extraction.decompose(ImageSavedResponse(file.name))
+          Extraction.decompose(ImageSavedResponse(file.name, clientPath))
       
     }
     
@@ -184,5 +209,26 @@ object CraftRest extends RestHelper {
     case _ =>  
      Extraction.decompose(ErrorResponse("Not Valid blaHHH"))
   })
+  
+  def copyImages(from:String, to:String) {
+    val srcFolder = new File("src/main/webapp/images/" + from)
+    val dstFolder = new File("src/main/webapp/images/" + to)
+    
+    if(srcFolder.exists) {
+      if(!dstFolder.exists) {
+        dstFolder.mkdir
+      }
+      srcFolder.list.foreach(f => {
+        val input = new FileInputStream(new File(srcFolder, f))
+	    val output = new FileOutputStream(new File(dstFolder, f))
+	    val buffer = new Array[Byte](1024);
+ 
+        output.write(Stream.continually(input.read).takeWhile(-1 !=).map(_.toByte).toArray)
+      
+        input.close();
+        output.close();
+      })
+    }
+  }
 
 }
